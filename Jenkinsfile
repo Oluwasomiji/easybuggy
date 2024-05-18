@@ -13,35 +13,35 @@ pipeline{
 		
 			}
         } 
-	    stage('RunSCAAnalysisUsingSnyk') {
-            steps {		
-				withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
-					sh 'mvn snyk:test -fn'
-				}
-			}
-    }	
-        stage('Build'){
-            steps{
-                withDockerRegistry(
-                    [credentialsId:"dockerlogin", url: ""]
-                )  {
-                    script{
-                    app = docker.build("asg")
-                    }
-                }
-            }
-        }
+	  //   stage('RunSCAAnalysisUsingSnyk') {
+   //          steps {		
+			// 	withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
+			// 		sh 'mvn snyk:test -fn'
+			// 	}
+			// }
+   //  }	
+   //      stage('Build'){
+   //          steps{
+   //              withDockerRegistry(
+   //                  [credentialsId:"dockerlogin", url: ""]
+   //              )  {
+   //                  script{
+   //                  app = docker.build("asg")
+   //                  }
+   //              }
+   //          }
+   //      }
 
-        stage('Push'){
-            steps{
-                script{
-                    docker.withRegistry("https://533267174558.dkr.ecr.us-west-2.amazonaws.com", "ecr:us-west-2:5008dffe-01e2-4643-8139-f5b375620f0a"){
-                        app.push("latest")
-                    }
+   //      stage('Push'){
+   //          steps{
+   //              script{
+   //                  docker.withRegistry("https://533267174558.dkr.ecr.us-west-2.amazonaws.com", "ecr:us-west-2:5008dffe-01e2-4643-8139-f5b375620f0a"){
+   //                      app.push("latest")
+   //                  }
                     
                     
-                }
-            }
+   //              }
+   //          }
         }
     }
 
